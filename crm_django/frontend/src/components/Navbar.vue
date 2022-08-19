@@ -16,7 +16,7 @@
         </ul>
       </div>
       <div class="navbar-end">
-        <router-link to="/register" class="btn btn-secondary me-2"
+        <router-link to="/login" class="btn btn-secondary me-2"
           >Log in</router-link
         >
       </div>

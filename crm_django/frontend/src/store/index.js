@@ -15,11 +15,11 @@ export default createStore({
     },
     setToken(state, token) {
       state.token = token;
-      isAuthenticated = true;
+      state.isAuthenticated = true;
     },
     removeToken(state) {
       state.token = "";
-      isAuthenticated = false;
+      state.isAuthenticated = false;
     },
   },
   actions: {},

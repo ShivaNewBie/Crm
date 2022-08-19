@@ -19,8 +19,10 @@ export default {
       //if the token exists
       axios.defaults.headers.common["Authorization"] =
         "Token" + this.$store.state.token; //token will be added automatically everytime we use axios
+      console.log(this.$store.state.token);
     } else {
       axios.defaults.headers.common["Authorization"] = ""; //not authenticated
+      console.log("test");
     }
   },
 };

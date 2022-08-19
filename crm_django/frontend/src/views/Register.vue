@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <form>
+    <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input
+          v-model="email"
           type="email"
           class="form-control"
           id="exampleInputEmail1"
@@ -14,6 +15,7 @@
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <input
+          v-model="password1"
           type="password"
           class="form-control"
           id="exampleInputPassword1"
@@ -23,6 +25,7 @@
       <div class="form-group">
         <label for="exampleInputPassword2">Password</label>
         <input
+          v-model="password2"
           type="password"
           class="form-control"
           id="exampleInputPassword2"
@@ -31,11 +34,55 @@
       </div>
       <button type="submit" class="btn btn-primary mt-2">Submit</button>
     </form>
+    <div class="notification is-danger" v-if="errors.length">
+      <!--Check if there are errors -->
+      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+    </div>
   </div>
 </template>
 
 <script>
+import { axios } from "@/common/api.service.js";
 export default {
   name: "Register",
+  data() {
+    return {
+      email: "",
+      password1: "",
+      password2: "",
+      errors: [],
+    };
+  },
+  methods: {
+    async submitForm() {
+      this.errors = [];
+      if (this.email === "") {
+        this.errors.push("The email is missing");
+      }
+      if (this.password1 === "") {
+        this.errors.push("The password is missing");
+      }
+      if (this.password2 === "") {
+        this.errors.push("The password is missing");
+      }
+      let endpoint = "/auth/users/";
+      try {
+        const response = await axios.post(endpoint, {
+          email: this.email,
+          password: this.password1,
+        });
+        this.$router.push("/");
+        console.log(response);
+      } catch (error) {
+        if (error.response) {
+          for (const property in error.response.data) {
+            this.errors.push(`${property}: ${error.response.data[property]}`);
+          }
+        } else if (error.message) {
+          this.errors.push("Something went wrong. Please try again");
+        }
+      }
+    },
+  },
 };
 </script>
