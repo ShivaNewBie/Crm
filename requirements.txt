@@ -1,0 +1,4 @@
+djoser 
+djangorestframework
+django==3.2
+
