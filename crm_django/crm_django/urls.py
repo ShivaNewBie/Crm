@@ -23,11 +23,12 @@ from core.views import IndexTemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
+
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-    re_path(r"^.*$", IndexTemplateView.as_view(),name='entry-point'), #entry point
+    path('api/v1/', include('lead.urls')),
 
-    
+    re_path(r"^.*$", IndexTemplateView.as_view(),name='entry-point'), #entry point
 
 
 ]

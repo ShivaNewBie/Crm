@@ -15,16 +15,29 @@
           </li>
         </ul>
       </div>
-      <div class="navbar-end">
-        <router-link to="/login" class="btn btn-secondary me-2"
-          >Log in</router-link
-        >
-      </div>
-      <div class="navbar-end">
-        <router-link to="/register" class="btn btn-success"
-          >Sign up</router-link
-        >
-      </div>
+      <template v-if="!$store.state.isAuthenticated">
+        <div class="navbar-end">
+          <router-link to="/login" class="btn btn-secondary me-2"
+            >Log in</router-link
+          >
+        </div>
+        <div class="navbar-end">
+          <router-link to="/register" class="btn btn-success"
+            >Sign up</router-link
+          >
+        </div>
+      </template>
+      <template v-else>
+        <div class="navbar-end">
+          <button
+            @click="emitLogout"
+            to="/logout"
+            class="btn btn-secondary me-2"
+          >
+            Log out
+          </button>
+        </div>
+      </template>
     </div>
   </nav>
 </template>
@@ -32,5 +45,10 @@
 <script>
 export default {
   name: "Navbar",
+  methods: {
+    emitLogout() {
+      this.$emit("logout");
+    },
+  },
 };
 </script>

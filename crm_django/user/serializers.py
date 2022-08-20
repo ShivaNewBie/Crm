@@ -10,7 +10,6 @@ class UserSerializer(UserSerializer):
         model = CustomUser
         fields = (
             'email',
-         
         )
 
 class UserCreateSerializer(UserCreateSerializer):

@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @logout="logoutAcc" />
   <router-view />
 </template>
 
@@ -13,16 +13,30 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    async logoutAcc() {
+      let endpoint = "/auth/token/logout/";
+
+      try {
+        const response = await axios.post(endpoint);
+        console.log(response);
+        axios.defaults.headers.common["Authorization"] = "";
+        localStorage.removeItem("token");
+
+        this.$store.commit("removeToken");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
   beforeCreate() {
     this.$store.commit("initializeStore"); //will run the function in store initializesStore
     if (this.$store.state.token) {
       //if the token exists
       axios.defaults.headers.common["Authorization"] =
         "Token" + this.$store.state.token; //token will be added automatically everytime we use axios
-      console.log(this.$store.state.token);
     } else {
       axios.defaults.headers.common["Authorization"] = ""; //not authenticated
-      console.log("test");
     }
   },
 };
