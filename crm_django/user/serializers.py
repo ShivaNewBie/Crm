@@ -5,11 +5,11 @@ from djoser.serializers import UserCreateSerializer
 from user.models import CustomUser
 
 class UserSerializer(UserSerializer):
-
+        
     class Meta(UserSerializer.Meta):
         model = CustomUser
         fields = (
-            'email',
+            'email','first_name', 'last_name','id'
         )
 
 class UserCreateSerializer(UserCreateSerializer):

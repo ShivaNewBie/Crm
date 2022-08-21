@@ -58,7 +58,6 @@ export default {
         this.$store.commit("setToken", token);
         axios.defaults.headers.common["Authorization"] = "Token " + token;
         localStorage.setItem("token", token);
-        this.$router.push("/");
         console.log(response);
         console.log(token);
         // console.log(response.data.auth_token);
@@ -71,6 +70,34 @@ export default {
           // this.errors.push("Something went wrong. Please try again");
           console.log(error);
         }
+      }
+      try {
+        const response = await axios.get("auth/users/me/");
+
+        this.$store.commit("setUser", {
+          id: response.data.id,
+          email: response.data.email,
+        });
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("id", response.data.id);
+
+        this.$router.push("/my-account/");
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        const response = await axios.get("api/v1/teams/get_my_team/");
+
+        this.$store.commit("setTeam", {
+          id: response.data.id,
+          name: response.data.team_name,
+        });
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
       }
     },
   },
