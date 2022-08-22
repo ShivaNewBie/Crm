@@ -2,6 +2,11 @@
   <div class="container">
     <h1 class="title">Team</h1>
 
+    <template v-if="team.created_by.id === parseInt($store.state.user.id)">
+      <router-link :to="{ name: 'addmember' }" class="btn btn-success"
+        >Add Member
+      </router-link>
+    </template>
     <table class="table">
       <thead>
         <tr>
@@ -29,6 +34,7 @@ export default {
     return {
       team: {
         members: [],
+        created_by: {},
       },
     };
   },
@@ -38,7 +44,8 @@ export default {
 
       try {
         const response = await axios.get(endpoint);
-        this.team.members = response.data.members;
+        this.team = response.data;
+        console.log(response);
       } catch (error) {
         console.log(error);
       }

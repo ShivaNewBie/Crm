@@ -39,6 +39,6 @@ class Lead(TimeStamp):
     estimated_value = models.IntegerField(blank=True,null=True)
     status = models.CharField(max_length=255, choices=CHOICES_STATUS, default=NEW)
     priority = models.CharField(max_length=255, choices=CHOICES_PRIORITY, default=MEDIUM)
+    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='asigned_leads',on_delete=models.SET_NULL, null=True,blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     associated_team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    

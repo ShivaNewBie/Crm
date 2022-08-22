@@ -5,12 +5,15 @@ from rest_framework.response import Response
 from team.models import Team
 from team.api.serializers import TeamSerializer
 
+from user.models import CustomUser
+
 class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
     queryset = Team.objects.all()
 
     def get_queryset(self):
-        return self.queryset.filter(members__in=[self.request.user]).first() #get team if u are a member
+        
+        return self.queryset.filter(members__in=[self.request.user]).first()
     def perform_create(self,serializer):
         obj = serializer.save(created_by=self.request.user)
         obj.members.add(self.request.user) #user who created will be member of team 
@@ -20,10 +23,24 @@ class TeamViewSet(viewsets.ModelViewSet):
 
 def get_my_team(request):
     team = Team.objects.filter(members__in=[request.user]).first()
-    serializer = TeamSerializer(team)
+    serializer = TeamSerializer(team, many=True)
     print(request.user)
 
     return Response(serializer.data)
+
+@api_view(['POST'])
+def add_member(request):
+    team = Team.objects.filter(members__in=[request.user]).first()
+    email = request.data['email']
+
+    print('Email', email)
+
+    user = CustomUser.objects.get(email=email)
+
+    team.members.add(user)
+    team.save()
+
+    return Response()
 
 # class MyTeamAPIView(generics.ListAPIView):
 #     serializer_class = TeamSerializer
