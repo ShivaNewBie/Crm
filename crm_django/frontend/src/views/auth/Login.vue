@@ -66,6 +66,7 @@ export default {
         console.log(token);
         // console.log(response.data.auth_token);
       } catch (error) {
+        console.log(error);
         if (error.response) {
           for (const property in error.response.data) {
             this.errors.push(`${property}: ${error.response.data[property]}`);
@@ -85,7 +86,6 @@ export default {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("id", response.data.id);
 
-        this.$router.push("/my-account/");
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -98,6 +98,7 @@ export default {
           id: response.data.id,
           name: response.data.team_name,
         });
+        this.$router.push("/my-account/");
 
         console.log(response);
       } catch (error) {
