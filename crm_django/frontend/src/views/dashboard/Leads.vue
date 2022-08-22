@@ -8,7 +8,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Company</th>
+          <th s cope="col">Company</th>
           <th scope="col">Contact person</th>
           <th scope="col">Status</th>
           <th></th>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import { axios } from "@/common/api.service.js";
-
+// import { axios } from "@/common/api.service.js";
+import axios from "axios";
 export default {
   name: "Leads",
   data() {

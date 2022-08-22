@@ -29,7 +29,9 @@
 </template>
 
 <script>
-import { axios } from "@/common/api.service.js";
+// import { axios } from "@/common/api.service.js";
+
+import axios from "axios";
 export default {
   name: "Login",
   data() {
@@ -41,6 +43,8 @@ export default {
   },
   methods: {
     async onSubmit() {
+      axios.defaults.headers.common["Authorization"] = "";
+      localStorage.removeItem("token");
       let endpoint = "/auth/token/login/";
       this.errors = [];
       if (this.email === "") {

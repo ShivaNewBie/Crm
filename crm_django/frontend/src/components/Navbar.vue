@@ -29,6 +29,11 @@
       </template>
       <template v-else>
         <div class="navbar-end">
+          <router-link :to="{ name: 'leads' }" class="btn btn-secondary me-2">
+            Lead
+          </router-link>
+        </div>
+        <div class="navbar-end">
           <button
             @click="emitLogout"
             to="/logout"

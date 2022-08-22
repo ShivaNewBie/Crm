@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import { axios } from "@/common/api.service.js";
-
+// import { axios } from "@/common/api.service.js";
+import axios from "axios";
 import Navbar from "@/components/Navbar.vue";
 
 export default {
@@ -33,12 +33,14 @@ export default {
   },
   beforeCreate() {
     this.$store.commit("initializeStore"); //will run the function in store initializesStore
-    console.log(this.$store.state.user);
     if (this.$store.state.token) {
       //if the token exists
+      console.log("initialize token");
+
       axios.defaults.headers.common["Authorization"] =
-        "Token" + this.$store.state.token; //token will be added automatically everytime we use axios
+        "Token " + this.$store.state.token; //token will be added automatically everytime we use axios WARNING!!! DO NOT FORGET TO USE SPACE IN AFTER TOKEN
     } else {
+      console.log("no token");
       axios.defaults.headers.common["Authorization"] = ""; //not authenticated
     }
     if (!this.$store.state.team.id) {

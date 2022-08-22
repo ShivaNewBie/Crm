@@ -3,6 +3,7 @@ from django.conf import settings
 
 from core.models import TimeStamp
 
+from team.models import Team
 
 class Lead(TimeStamp):
     NEW = 'new'
@@ -39,3 +40,5 @@ class Lead(TimeStamp):
     status = models.CharField(max_length=255, choices=CHOICES_STATUS, default=NEW)
     priority = models.CharField(max_length=255, choices=CHOICES_PRIORITY, default=MEDIUM)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    associated_team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    

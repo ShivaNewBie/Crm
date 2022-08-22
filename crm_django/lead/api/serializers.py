@@ -4,11 +4,11 @@ from lead.models import Lead
 
 class LeadSerializer(serializers.ModelSerializer):
     created_by = serializers.StringRelatedField()
-    created_at = serializers.SerializerMethodField() 
+    created_at = serializers.SerializerMethodField()
     class Meta:
         model = Lead
-        fields = (
-            '__all__'
+        exclude = (
+            'associated_team',
         )
     
     def get_created_at(self,instance): #modified date time

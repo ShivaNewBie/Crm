@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { axios } from "@/common/api.service.js";
-
+// import { axios } from "@/common/api.service.js";
+import axios from "axios";
 export default {
   name: "Lead",
   data() {
