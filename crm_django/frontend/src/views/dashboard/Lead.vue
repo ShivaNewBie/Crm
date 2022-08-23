@@ -22,6 +22,8 @@
           <h4><strong>Estimated_value: </strong> {{ lead.estimated_value }}</h4>
           <h4><strong>Status: </strong> {{ lead.status }}</h4>
           <h4><strong>Priority: </strong> {{ lead.priority }}</h4>
+          <h4><strong>Assigned to: </strong> {{ lead.assigned_to.email }}</h4>
+
           <h4><strong>Created_by: </strong> {{ lead.created_by }}</h4>
         </div>
       </div>
@@ -36,7 +38,9 @@ export default {
   name: "Lead",
   data() {
     return {
-      lead: {},
+      lead: {
+        assigned_to: {},
+      },
     };
   },
   props: {

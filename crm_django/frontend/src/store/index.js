@@ -23,6 +23,16 @@ export default createStore({
         state.user.id = localStorage.getItem("id");
         state.team.name = localStorage.getItem("team_name");
         state.team.id = localStorage.getItem("team_id");
+      } else {
+        state.token = "";
+        state.isAuthenticated = false;
+        state.user.id = 0;
+        state.user.username = "";
+        state.team.id = 0;
+        state.team.name = "";
+        state.team.plan = "";
+        state.team.max_leads = 0;
+        state.team.max_clients = 0;
       }
     },
     setToken(state, token) {

@@ -10,6 +10,8 @@
           <th scope="col">#</th>
           <th s cope="col">Company</th>
           <th scope="col">Contact person</th>
+          <th scope="col">Assigned to</th>
+
           <th scope="col">Status</th>
           <th></th>
         </tr>
@@ -18,7 +20,10 @@
         <tr v-for="lead in leads" :key="lead.id">
           <th scope="row">1</th>
           <td>{{ lead.company_name }}</td>
+
           <td>{{ lead.contact_person }}</td>
+          <td>{{ lead.assigned_to.email }}</td>
+
           <td>{{ lead.status }}</td>
           <td>
             <router-link :to="{ name: 'lead', params: { id: lead.id } }"

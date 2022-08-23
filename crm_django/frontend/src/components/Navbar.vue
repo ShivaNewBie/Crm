@@ -29,6 +29,16 @@
       </template>
       <template v-else>
         <div class="navbar-end">
+          <router-link :to="{ name: 'clients' }" class="btn btn-secondary me-2">
+            Client
+          </router-link>
+        </div>
+        <div class="navbar-end">
+          <router-link :to="{ name: 'team' }" class="btn btn-secondary me-2">
+            Team
+          </router-link>
+        </div>
+        <div class="navbar-end">
           <router-link :to="{ name: 'leads' }" class="btn btn-secondary me-2">
             Lead
           </router-link>

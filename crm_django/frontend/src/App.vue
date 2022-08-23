@@ -34,6 +34,7 @@ export default {
   beforeCreate() {
     this.$store.commit("initializeStore"); //will run the function in store initializesStore
     if (this.$store.state.token) {
+      console.log(this.$store.state.team.id);
       //if the token exists
       console.log("initialize token");
 
@@ -43,7 +44,12 @@ export default {
       console.log("no token");
       axios.defaults.headers.common["Authorization"] = ""; //not authenticated
     }
-    if (!this.$store.state.team.id) {
+    if (
+      this.$store.state.team.id == "" ||
+      this.$store.state.team.id === undefined ||
+      this.$store.state.team.name == ""
+    ) {
+      console.log("test");
       //if there is no team created. 0 will return false
       this.$router.push("/add-team/");
     }
