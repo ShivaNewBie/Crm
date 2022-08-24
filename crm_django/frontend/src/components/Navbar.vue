@@ -44,6 +44,14 @@
           </router-link>
         </div>
         <div class="navbar-end">
+          <router-link
+            :to="{ name: 'myaccount' }"
+            class="btn btn-secondary me-2"
+          >
+            My account
+          </router-link>
+        </div>
+        <div class="navbar-end">
           <button
             @click="emitLogout"
             to="/logout"

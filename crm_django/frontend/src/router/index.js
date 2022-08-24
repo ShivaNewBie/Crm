@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: "/my-account",
-    name: "my-account",
+    name: "myaccount",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -171,7 +171,19 @@ const routes = [
     },
     props: true,
   },
-
+  {
+    path: "/team/edit-account/:id",
+    name: "editaccount",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/forms/EditMember.vue"),
+    meta: {
+      requireLogin: true,
+    },
+    props: true,
+  },
   {
     path: "/team/add-member",
     name: "addmember",

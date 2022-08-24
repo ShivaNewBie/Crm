@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from team.models import Team
+from team.models import Team,Plan
 
 admin.site.register(Team)
+admin.site.register(Plan)

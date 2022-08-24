@@ -1,10 +1,17 @@
-
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response 
+
+from django.http import Http404
+
+
+from team.models import Team
+from lead.models import Lead
+
 
 from client.api.serializers import ClientSerializer, NoteSerializer
 from client.models import Client, Note
 
-from team.models import Team
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
@@ -34,3 +41,19 @@ class NoteViewSet(viewsets.ModelViewSet):
         client_id = self.request.data['client_id'] #reference to client field in note model
 
         serializer.save(associated_team=team,created_by=self.request.user, client_id=client_id)
+
+@api_view(['POST'])
+def convert_lead_to_client(request):
+    team = Team.objects.filter(members__in=[request.user]).first()
+    lead_id = request.data['lead_id']
+
+    try: 
+        lead = Lead.objects.filter(associated_team=team).get(pk=lead_id)
+    except Lead.DoesNotExist:
+        raise Http404 
+
+    client = Client.objects.create(associated_team=team, name=lead.company_name, 
+                                    contact_person=lead.contact_person, 
+                                    email=lead.email, 
+                                    phone=lead.phone,website=lead.website, created_by=request.user)
+    return Response()

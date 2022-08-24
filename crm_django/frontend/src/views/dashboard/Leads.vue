@@ -22,7 +22,11 @@
           <td>{{ lead.company_name }}</td>
 
           <td>{{ lead.contact_person }}</td>
-          <td>{{ lead.assigned_to.email }}</td>
+          <td>
+            <template v-if="lead.assigned_to">
+              {{ lead.assigned_to.first_name }} {{ lead.assigned_to.last_name }}
+            </template>
+          </td>
 
           <td>{{ lead.status }}</td>
           <td>

@@ -11,7 +11,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Full name</th>
+
           <th></th>
         </tr>
       </thead>
@@ -19,6 +21,7 @@
         <tr v-for="member in team.members" :key="team.id">
           <th scope="row">1</th>
           <td>{{ member.email }}</td>
+          <td>{{ member.first_name }} {{ member.last_name }}</td>
         </tr>
       </tbody>
     </table>
