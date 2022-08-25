@@ -48,29 +48,62 @@ import axios from "axios";
 
 export default {
   name: "Plans",
+  data() {
+    return {
+      pub_key: "",
+      stripe: null,
+    };
+  },
+  async created() {
+    await this.getPubKey();
+    this.stripe = Stripe(this.pub_key);
+  },
   methods: {
+    async getPubKey() {
+      try {
+        const response = await axios.get("/api/v1/stripe/get_stripe_pub_key/");
+
+        this.pub_key = response.data.pub_key;
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async subscribe(plan_name) {
-      let endpoint = "/api/v1/teams/upgrade_plan/"; //search passed param
       this.loadingLeads = true;
       const data = {
         plan_name: plan_name,
       };
-      try {
-        const response = await axios.post(endpoint, data);
-        this.$store.commit("setTeam", {
-          id: response.data.id,
-          name: response.data.team_name,
-          plan_name: response.data.plan.plan_name,
-          max_leads: response.data.plan.max_leads,
-          max_clients: response.data.plan.max_clients,
-        });
-        this.$router.push("/teams");
 
+      try {
+        const response = await axios.post(
+          "/api/v1/stripe/create_checkout_session/",
+          data
+        );
         console.log(response);
-        console.log("upgrade");
+
+        return this.stripe.redirectToCheckout({
+          sessionId: response.data.sessionId,
+        });
       } catch (error) {
         console.log(error);
       }
+      //   try {
+      //     const response = await axios.post(endpoint, data);
+      //     this.$store.commit("setTeam", {
+      //       id: response.data.id,
+      //       name: response.data.team_name,
+      //       plan_name: response.data.plan.plan_name,
+      //       max_leads: response.data.plan.max_leads,
+      //       max_clients: response.data.plan.max_clients,
+      //     });
+      //     this.$router.push("/teams");
+
+      //     console.log(response);
+      //     console.log("upgrade");
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
     },
   },
 };
