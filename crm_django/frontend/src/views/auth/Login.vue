@@ -44,6 +44,8 @@ export default {
   methods: {
     async onSubmit() {
       axios.defaults.headers.common["Authorization"] = "";
+      axios.defaults.xsrfCookieName = "csrftoken";
+      axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
       localStorage.removeItem("token");
       let endpoint = "/auth/token/login/";
       this.errors = [];
@@ -97,7 +99,11 @@ export default {
         this.$store.commit("setTeam", {
           id: response.data.id,
           name: response.data.team_name,
+          plan_name: response.data.plan.plan_name,
+          max_leads: response.data.plan.max_leads,
+          max_clients: response.data.plan.max_clients,
         });
+
         this.$router.push("/my-account/");
 
         console.log(response);

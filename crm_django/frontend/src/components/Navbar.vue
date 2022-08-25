@@ -34,7 +34,7 @@
           </router-link>
         </div>
         <div class="navbar-end">
-          <router-link :to="{ name: 'team' }" class="btn btn-secondary me-2">
+          <router-link :to="{ name: 'teams' }" class="btn btn-secondary me-2">
             Team
           </router-link>
         </div>

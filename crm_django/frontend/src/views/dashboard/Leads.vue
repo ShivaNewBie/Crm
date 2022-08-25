@@ -1,9 +1,29 @@
 <template>
   <div class="container">
     <h1 class="title">Leads</h1>
-    <router-link :to="{ name: 'addlead' }" class="btn btn-success"
+    <router-link
+      v-if="$store.state.team.max_leads > num_leads"
+      :to="{ name: 'addlead' }"
+      class="btn btn-success"
       >Add Lead
     </router-link>
+    <div v-else>You have reached your plan limitations!</div>
+    <hr />
+    <form @submit.prevent="onSubmit">
+      <div class="input-group mb-3">
+        <input
+          v-model="query"
+          type="text"
+          class="form-control"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="basic-addon2"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary">Submit</button>
+        </div>
+      </div>
+    </form>
     <table class="table">
       <thead>
         <tr>
@@ -37,6 +57,24 @@
         </tr>
       </tbody>
     </table>
+    <div class="buttons">
+      <button
+        @click="prevPage()"
+        v-if="previousButton"
+        type="button"
+        class="btn btn-light"
+      >
+        Previous
+      </button>
+      <button
+        v-if="nextButton"
+        @click="nextPage()"
+        type="button"
+        class="btn btn-light"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </template>
 
@@ -49,15 +87,50 @@ export default {
     return {
       leads: [],
       loadingLeads: false,
+      nextButton: false,
+      previousButton: false,
+      currentPage: 1,
+      query: "",
+      num_leads: 0,
     };
   },
   methods: {
+    onSubmit() {
+      this.getLeads();
+    },
+    nextPage() {
+      this.currentPage += 1;
+      this.getLeads();
+    },
+    prevPage() {
+      this.currentPage -= 1;
+      this.getLeads();
+    },
     async getLeads() {
-      let endpoint = "/api/v1/leads/";
+      this.nextButton = false;
+      this.previousButton = false;
+      let endpoint = `/api/v1/leads/?page=${this.currentPage}&search=${this.query}`; //search passed param
       this.loadingLeads = true;
+
+      try {
+        const response = await axios.get("api/v1/leads/");
+        this.num_leads = response.data.count;
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+
       try {
         const response = await axios.get(endpoint);
-        this.leads = response.data;
+        this.leads = response.data.results;
+
+        if (response.data.next) {
+          this.nextButton = true;
+        }
+        if (response.data.previous) {
+          this.previousButton = true;
+        }
         console.log(response);
 
         this.loadingLeads = false;

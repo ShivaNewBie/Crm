@@ -44,15 +44,11 @@ export default {
       console.log("no token");
       axios.defaults.headers.common["Authorization"] = ""; //not authenticated
     }
-    if (
-      this.$store.state.team.id == "" ||
-      this.$store.state.team.id === undefined ||
-      this.$store.state.team.name == ""
-    ) {
-      console.log("test");
-      //if there is no team created. 0 will return false
-      this.$router.push("/add-team/");
-    }
+    // if (!this.$store.state.team.id) {
+    //   console.log("test");
+    //   //if there is no team created. 0 will return false
+    //   this.$router.push("/add-team/");
+    // }
   },
 };
 </script>

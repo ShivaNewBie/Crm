@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ $store.state.team.name }}
     <h1 class="title">My account</h1>
     <router-link
       :to="{ name: 'editaccount', params: { id: this.$store.state.user.id } }"

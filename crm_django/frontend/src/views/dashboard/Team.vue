@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <h1 class="title">Team</h1>
+    <h1 class="title">{{ team.team_name }}</h1>
+    <hr />
+    <p><strong>Plan: </strong>{{ $store.state.team.plan_name }}</p>
+    <p><strong>Max Clients: </strong>{{ $store.state.team.max_clients }}</p>
+    <p><strong>Max Leads: </strong>{{ $store.state.team.max_leads }}</p>
 
+    <p>
+      <router-link :to="{ name: 'plans' }">Change plan</router-link>
+    </p>
     <template v-if="team.created_by.id === parseInt($store.state.user.id)">
       <router-link :to="{ name: 'addmember' }" class="btn btn-success"
         >Add Member

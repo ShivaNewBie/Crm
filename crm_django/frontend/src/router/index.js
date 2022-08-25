@@ -98,8 +98,8 @@ const routes = [
     props: true,
   },
   {
-    path: "/team",
-    name: "team",
+    path: "/teams",
+    name: "teams",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -110,8 +110,8 @@ const routes = [
     },
   },
   {
-    path: "/add-team",
-    name: "addteam",
+    path: "/add-teams",
+    name: "addteams",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -172,7 +172,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/team/edit-account/:id",
+    path: "/teams/edit-account/:id",
     name: "editaccount",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -185,7 +185,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/team/add-member",
+    path: "/teams/add-member",
     name: "addmember",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -219,6 +219,32 @@ const routes = [
       requireLogin: true,
     },
     props: true,
+  },
+  {
+    path: "/teams/plans",
+    name: "plans",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/dashboard/Plans.vue"),
+    meta: {
+      requireLogin: true,
+    },
+  },
+  {
+    path: "/teams/plans/thank-you",
+    name: "plansthankyou",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/dashboard/PlansThankYou.vue"
+      ),
+    meta: {
+      requireLogin: true,
+    },
   },
 ];
 

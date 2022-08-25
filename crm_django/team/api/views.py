@@ -6,7 +6,7 @@ from rest_framework import status
 
 from django.http import Http404
 
-from team.models import Team
+from team.models import Team, Plan
 from team.api.serializers import TeamSerializer, UserSerializer
 
 from user.models import CustomUser
@@ -63,6 +63,25 @@ def add_member(request):
     team.save()
 
     return Response()
+
+@api_view(['POST'])
+def upgrade_plan(request):
+    team = Team.objects.filter(members__in=[request.user]).first()
+    plan = request.data['plan_name']
+    serializer = TeamSerializer(team)
+
+    print('plan', plan)
+
+    if plan == 'free':
+        plan = Plan.objects.get(plan_name='Free')
+    elif plan == 'smallteam':
+        plan = Plan.objects.get(plan_name='Small team')
+    elif plan == 'bigteam':
+        plan = Plan.objects.get(plan_name='Big team')
+
+    team.plan = plan 
+    team.save()
+    return Response(serializer.data)
 
 # class MyTeamAPIView(generics.ListAPIView):
 #     serializer_class = TeamSerializer

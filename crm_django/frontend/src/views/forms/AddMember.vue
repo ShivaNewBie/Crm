@@ -73,7 +73,7 @@ export default {
           email: this.email,
           password: this.password1,
         });
-        this.$router.push("/team");
+        this.$router.push("/teams");
         console.log(response);
       } catch (error) {
         console.log(error);
