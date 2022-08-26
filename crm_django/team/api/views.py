@@ -158,11 +158,23 @@ def check_session(request):
         print(e)   
         return Response({'error': e})
 
+
 @api_view(['POST'])
 def cancel_plan(request):
     team = Team.objects.filter(members__in=[request.user]).first()
+    plan_free = Plan.objects.get(plan_name='Free')
 
+    team.plan = plan_free 
+    team.plan_status = Team.PLAN_CANCELLED
+    team.save()
 
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    stripe.Subscription.delete(team.stripe_subscription_id)
+ 
+    serializer = TeamSerializer(team)
+    return Response(serializer.data)
+
+    
 @csrf_exempt
 def stripe_webhook(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY

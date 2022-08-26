@@ -39,6 +39,12 @@
           </button>
         </div>
       </div>
+      <hr />
+      <div>
+        <button @click="cancelPlan()" class="btn btn-danger">
+          Cancel Plan
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +71,24 @@ export default {
 
         this.pub_key = response.data.pub_key;
         console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async cancelPlan() {
+      let endpoint = "/api/v1/teams/cancel_plan/";
+
+      try {
+        const response = await axios.post(endpoint);
+
+        console.log(response);
+        this.$store.commit("setTeam", {
+          id: response.data.id,
+          name: response.data.team_name,
+          plan_name: response.data.plan.plan_name,
+          max_leads: response.data.plan.max_leads,
+          max_clients: response.data.plan.max_clients,
+        });
       } catch (error) {
         console.log(error);
       }

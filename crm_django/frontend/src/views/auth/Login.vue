@@ -44,8 +44,8 @@ export default {
   methods: {
     async onSubmit() {
       axios.defaults.headers.common["Authorization"] = "";
-      axios.defaults.xsrfCookieName = "csrftoken";
-      axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+      // axios.defaults.xsrfCookieName = "csrftoken";
+      // axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
       localStorage.removeItem("token");
       let endpoint = "/auth/token/login/";
       this.errors = [];
