@@ -4,6 +4,8 @@
     <router-link :to="{ name: 'editclient' }" class="btn btn-success"
       >Edit Client
     </router-link>
+    <button @click="deleteClient" class="btn btn-danger">Delete Client</button>
+
     <div class="row gx-5">
       <div class="col">
         <div class="shadow p-3 mb-5 bg-body rounded">
@@ -62,6 +64,18 @@ export default {
     },
   },
   methods: {
+    async deleteClient() {
+      let endpoint = `/api/v1/clients/delete_client/${this.id}/`;
+
+      try {
+        const response = await axios.post(endpoint);
+        this.$router.push("/clients");
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getClient() {
       let endpoint = `/api/v1/clients/${this.id}/`;
 

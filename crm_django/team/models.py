@@ -27,6 +27,7 @@ class Team(TimeStamp):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, related_name='teams', on_delete=models.SET_NULL, null=True,blank=True )
     plan_status = models.CharField(max_length=20, choices=CHOICES_PLAN_STATUS, default=PLAN_ACTIVE)
+    plan_end_date = models.DateTimeField(blank=True,null=True)
     stripe_customer_id = models.CharField(max_length=255, blank=True, null=True) #track customer id
     stripe_subscription_id = models.CharField(max_length=255,blank=True, null=True) 
 

@@ -2,6 +2,9 @@
 from rest_framework import viewsets,filters
 from user.models import CustomUser
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from rest_framework.pagination import PageNumberPagination
 
 
@@ -43,3 +46,11 @@ class LeadViewSet(viewsets.ModelViewSet):
         team = Team.objects.filter(members__in=[self.request.user]).first()
         serializer.save(associated_team=team,created_by=self.request.user)
         
+@api_view(['POST'])
+def delete_lead(request,lead_id):
+    team = Team.objects.filter(members__in=[request.user]).first()
+
+    lead = team.leads.filter(pk=lead_id)
+    lead.delete()
+
+    return Response({'message': 'Lead was deleted'})

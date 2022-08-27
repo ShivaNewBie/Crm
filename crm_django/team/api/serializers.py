@@ -16,6 +16,6 @@ class TeamSerializer(serializers.ModelSerializer):
     plan = PlanSerializer(read_only=True)
     class Meta:
         model = Team 
-        fields = ('id','team_name','members','created_by','plan',)
+        fields = ('id','team_name','members','created_by','plan','plan_end_date')
 
 

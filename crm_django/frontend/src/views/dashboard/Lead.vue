@@ -7,6 +7,7 @@
     <button @click="convertToClient" class="btn btn-success">
       Convert to client
     </button>
+    <button @click="deleteLead" class="btn btn-danger">Delete Lead</button>
     <div class="row gx-5">
       <div class="col">
         <div class="shadow p-3 mb-5 bg-body rounded">
@@ -58,6 +59,18 @@ export default {
     },
   },
   methods: {
+    async deleteLead() {
+      let endpoint = `/api/v1/leads/delete_lead/${this.id}/`;
+
+      try {
+        const response = await axios.post(endpoint);
+        this.$router.push("/leads");
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getLead() {
       let endpoint = `/api/v1/leads/${this.id}/`;
 

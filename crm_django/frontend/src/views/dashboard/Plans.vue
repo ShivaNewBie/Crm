@@ -89,6 +89,7 @@ export default {
           max_leads: response.data.plan.max_leads,
           max_clients: response.data.plan.max_clients,
         });
+        this.$router.push({ name: "teams" });
       } catch (error) {
         console.log(error);
       }
